@@ -9,19 +9,18 @@
 # ['ddns_key]' : ddns keyfile for updating ddns
 #
 # Sample usage:
-#   dhcp::zone {"volcano.lair.":
+#   dhcp::zone {"volcano.lair":
 #     ensure      => present,
 #     primary_dns => '127.0.0.1',
 #     key         => 'volcano',
 #   }
 #
-#   dhcp::zone {"1.100.10.in-addr.arpa.":
+#   dhcp::zone {"1.100.10.in-addr.arpa":
 #     ensure      => present,
 #     primary_dns => '127.0.0.1',
 #     key         => 'volcano',
 #   }
 define dhcp::zone(
-  $zonename,
   $primary_dns,
   $ddns_key,
   $ensure = 'present',
@@ -34,7 +33,6 @@ define dhcp::zone(
   validate_string($ensure)
   validate_re($ensure, ['present', 'absent'],
               "\$ensure must be either 'present' or 'absent', got '${ensure}'")
-  validate_string($zonename)
   validate_string($primary_dns)
   validate_string($ddns_key)
 
