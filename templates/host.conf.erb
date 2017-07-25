@@ -1,7 +1,7 @@
 # This file is managed by puppet
 
 group <%= @name %> {
-  <% unless @global_options.empty-%>
+  <% if @global_optionsi -%>
   <%= @global_options.join(";\n") %>;
 <% end %>
 
