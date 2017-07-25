@@ -21,8 +21,8 @@ group <%= @name %> {
     <% end -%>
 <%
   options = data.fetch('options', nil)
-  scope.function_validate_array([options])
   unless options.empty?
+  scope.function_validate_array([options])
  -%>
   <%= options.join(";\n") %>;
 <% end -%>
