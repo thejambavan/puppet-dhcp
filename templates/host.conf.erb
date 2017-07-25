@@ -19,12 +19,11 @@ group <%= @name %> {
     <% if fixed_address -%>
     fixed-address <%= fixed_address %>;
     <% end -%>
-<%
-  options = data.fetch('options', nil)
-  unless options.empty?
-  scope.function_validate_array([options])
- -%>
-  <%= options.join(";\n") %>;
+<% options = data.fetch('options', nil) -%>
+
+<% options.each do |option| -%>
+  <%= option %>;
+
 <% end -%>
   }
 <% end -%>
