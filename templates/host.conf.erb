@@ -1,5 +1,6 @@
 # This file is managed by puppet
-group <%= name %> {
+
+group <%= @name %> {
 
 <%- @hash_data.sort.each do |host, data|
   scope.function_validate_hash([data]) 
