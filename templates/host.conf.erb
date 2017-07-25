@@ -21,7 +21,7 @@ group <%= @name %> {
   scope.function_validate_array([options])
   unless options.empty?
  -%>
-  <%= options.join(";\n") %>;
+  <%= options.join(";\n    ") %>;
 <% end -%>
   }
 <% end -%>
