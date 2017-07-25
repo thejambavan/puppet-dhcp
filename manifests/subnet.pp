@@ -23,6 +23,7 @@
 #     other_opts => ['filename "pxelinux.0";', 'next-server 10.27.10.1;'],
 #   }
 #
+
 define dhcp::subnet(
   $broadcast,
   $ensure = present,
@@ -42,7 +43,7 @@ define dhcp::subnet(
 
   validate_string($ensure)
   validate_re($ensure, ['present', 'absent'],
-              "\$ensure must be either 'present' or 'absent', got '${ensure}'")
+  "\$ensure must be either 'present' or 'absent', got '${ensure}'")
   validate_string($broadcast)
   validate_re($broadcast, $ip_re)
   validate_string($netmask)
@@ -50,12 +51,6 @@ define dhcp::subnet(
   validate_string($subnet_mask)
   validate_string($domain_name)
   validate_bool($is_shared)
-
-  concat {"${dhcp::params::config_dir}/hosts.d/${name}.conf":
-    owner => root,
-    group => root,
-    mode  => '0644',
-  }
 
   file {"${dhcp::params::config_dir}/subnets/${name}.conf":
     ensure  => $ensure,
@@ -69,19 +64,6 @@ define dhcp::subnet(
     concat::fragment {"dhcp.subnet.${name}":
       target  => "${dhcp::params::config_dir}/dhcpd.conf",
       content => "include \"${dhcp::params::config_dir}/subnets/${name}.conf\";\n",
-    }
-  }
-
-  if $ensure == 'present' {
-    concat::fragment {"dhcp.subnet.${name}.hosts":
-      target  => "${dhcp::params::config_dir}/dhcpd.conf",
-      content => "include \"${dhcp::params::config_dir}/hosts.d/${name}.conf\";\n",
-    }
-
-    concat::fragment {"dhcp.subnet.${name}.base":
-      target  => "${dhcp::params::config_dir}/hosts.d/${name}.conf",
-      content => "# File managed by puppet\n",
-      order   => '00',
     }
   }
 }

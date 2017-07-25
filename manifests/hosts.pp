@@ -33,10 +33,24 @@ define dhcp::hosts (
   validate_string($template)
 
   if $ensure == 'present' {
+
+    concat {"${dhcp::params::config_dir}/hosts.d/${name}.conf":
+      owner => root,
+      group => root,
+      mode  => '0644',
+    }
+
+    concat::fragment {"dhcp.host.${name}.hosts":
+      target  => "${dhcp::params::config_dir}/dhcpd.conf",
+      content => "include \"${dhcp::params::config_dir}/hosts.d/${name}.conf\";\n",
+    }
+
     concat::fragment {"dhcp.host.${name}":
-      target  => "${dhcp::params::config_dir}/hosts.d/${subnet}.conf",
+      target  => "${dhcp::params::config_dir}/hosts.d/${name}.conf",
       content => template($template),
       notify  => Service['dhcpd'],
     }
+
   }
 }
+
