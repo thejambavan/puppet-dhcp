@@ -2,7 +2,7 @@
 
 group <%= @name %> {
   <% if @global_options -%>
-  <%= @global_options.join(";\n") %>;
+  <%= @global_options.join(";\n") %>
 <% end %>
 
 <%- @hash_data.sort.each do |host, data|
