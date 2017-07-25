@@ -12,12 +12,10 @@ group <%= @name %> {
  -%>
   host <%= host %> {
     hardware ethernet <%= if_mac %>;
-<%
-  fixed_address = data.fetch('fixed_address', nil) || host
-  scope.function_validate_string([fixed_address])
-  scope.function_validate_re([fixed_address, '^\S+$'])
- -%>
+    <% fixed_address = data.fetch('fixed_address', nil) -%>
+    <% if fixed_address -%>
     fixed-address <%= fixed_address %>;
+    <% end -%>
 <%
   options = data.fetch('options', nil) || @global_options
   scope.function_validate_array([options])
@@ -25,7 +23,7 @@ group <%= @name %> {
  -%>
   <%= options.join(";\n") %>;
 <% end -%>
-}
+  }
 <% end -%>
 <% end -%>
 }
