@@ -1,6 +1,9 @@
 # This file is managed by puppet
 
 group <%= @name %> {
+  <% unless @global_options.empty-%>
+  <%= @global_options.join(";\n") %>;
+<% end %>
 
 <%- @hash_data.sort.each do |host, data|
   scope.function_validate_hash([data]) 
@@ -17,11 +20,11 @@ group <%= @name %> {
     fixed-address <%= fixed_address %>;
     <% end -%>
 <%
-  options = data.fetch('options', nil) || @global_options
+  options = data.fetch('options', nil)
   scope.function_validate_array([options])
   unless options.empty?
  -%>
-  <%= options.join(";\n    ") %>;
+  <%= options.join(";\n") %>;
 <% end -%>
   }
 <% end -%>
