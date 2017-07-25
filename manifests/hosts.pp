@@ -34,7 +34,7 @@ define dhcp::hosts (
 
   if $ensure == 'present' {
     concat::fragment {"dhcp.host.${name}":
-      target  => "${dhcp::params::config_dir}/hosts.d/${title}.conf",
+      target  => "${dhcp::params::config_dir}/hosts.d/${subnet}.conf",
       content => template($template),
       notify  => Service['dhcpd'],
     }
