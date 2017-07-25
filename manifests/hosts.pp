@@ -18,7 +18,7 @@ define dhcp::hosts (
   $subnet,
   $ensure = present,
   $global_options = [],
-  $template = "${module_name}/group.conf.erb",
+  $template = "${module_name}/host.conf.erb",
 ) {
 
   include ::dhcp::params
