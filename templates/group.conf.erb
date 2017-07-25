@@ -1,5 +1,21 @@
-# File managed by puppet
-
-# FIXME: THIS DOES NOT WORK YET
-group <%= @name %> {
+<%- @hash_data.sort.each do |host, data|
+  scope.function_validate_hash([data]) 
+  raise Puppet::ParseError, "Missing interfaces hash for host '#{host}'" unless data.has_key? 'interfaces' 
+  data.fetch('interfaces').sort.each do |if_name, if_mac|
+    scope.function_validate_re([if_name, '^\S+$'])
+    scope.function_validate_string([if_mac])
+    scope.function_validate_re([if_mac, '^[A-Fa-f0-9:.]+$'])
+  -%>
+group <%= title %> {
+FIXME: for loop for hosts goes here
+<%
+  options = data.fetch('options', nil) || @global_options
+  scope.function_validate_array([options])
+  unless options.empty?
+ -%>
+  <%= options.join(";\n") %>;
+<% end -%>
+  }
 }
+<% end -%>
+<% end -%>
