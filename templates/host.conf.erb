@@ -20,10 +20,10 @@ group <%= @name %> {
     fixed-address <%= fixed_address %>;
     <% end -%>
 <% options = data.fetch('options', nil) -%>
-
+<% if options -%>
 <% options.each do |option| -%>
   <%= option %>;
-
+<% end -%>
 <% end -%>
   }
 <% end -%>
